@@ -1,4 +1,5 @@
-using MyUnityPackage.Quests;
+using MyUnityPackage.ProgressionSystem;
+using MyUnityPackage.Toolkit;
 using System;
 
 public class CoinObjective : IQuestObjective, IProgressionNotifier
@@ -8,17 +9,17 @@ public class CoinObjective : IQuestObjective, IProgressionNotifier
     private string description; 
     public string Description => description;
 
-    private bool isComplete;
-    public bool IsComplete => isComplete;
+    private bool isCompleted;
+    public bool IsCompleted => isCompleted;
 
     private int currentProgress;
     public int CurrentProgress => currentProgress;
 
     private int maxProgress;
+    public int MaxProgress => maxProgress;
 
     public event Action<int, int> OnProgress;
-
-    public int MaxProgress => maxProgress;
+    public event Action OnCompleted;
 
     public string Count => throw new NotImplementedException();
 
@@ -37,21 +38,27 @@ public class CoinObjective : IQuestObjective, IProgressionNotifier
 
     public void OnCoinClaim()
     {
+        if(isCompleted) return;
+
+        Logger.LogMessage("CoinObjective : OnCoinClaim");
         currentProgress++;
+        Logger.LogMessage("currentProgress : " + currentProgress);
+
         if (CheckProgress())
         {
-            //TO DO
+            OnCompleted?.Invoke();
+            Logger.LogMessage("OnCompleted : ");
         }
         OnProgress?.Invoke(currentProgress, MaxProgress);
     }
 
     public bool CheckProgress()
     {
-        return isComplete = CurrentProgress >= MaxProgress;
+        return isCompleted = CurrentProgress >= MaxProgress;
     }
 
-    public bool IsProgress()
+    public bool IsComplete()
     {
-        return IsComplete;
+        return IsCompleted;
     }
 }

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: faacf68ffae54394c863f2426435aa83, type: 3}
   m_Name: QuestDataSO
   m_EditorClassIdentifier: 
-  title: 
-  description: 
+  id: CoinQuest
+  title: coin quest title
+  description: coin quest decription
   objectives:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 93957a1b6bba1134d802d1231bafce52, type: 2}

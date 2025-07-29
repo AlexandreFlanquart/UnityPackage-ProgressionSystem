@@ -1,6 +1,6 @@
 using System;
 
-namespace MyUnityPackage.Quests
+namespace MyUnityPackage.ProgressionSystem
 {
     public interface IProgressionNotifier
     {

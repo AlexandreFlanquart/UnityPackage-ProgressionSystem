@@ -1,5 +1,7 @@
-using MyUnityPackage.Quests;
+using MyUnityPackage.ProgressionSystem;
+using UnityEngine;
 
+[CreateAssetMenu(fileName = "CoinObjectiveSO", menuName = "ScriptableObjects/Quest/CoinObjectiveSO")]
 public class CoinObjectiveSO : ObjectiveDataSO
 {
     public int countRequired;

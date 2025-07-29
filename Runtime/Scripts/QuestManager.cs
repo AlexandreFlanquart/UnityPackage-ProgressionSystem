@@ -1,22 +1,55 @@
-﻿using MyUnityPackage.Quests;
+﻿using MyUnityPackage.Toolkit;
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
-public class QuestManager : MonoBehaviour
+namespace MyUnityPackage.ProgressionSystem
 {
-    public QuestUI questUI;
-
-    void Start()
+    public class QuestManager : MonoBehaviour
     {
-        // Get quest SO
+        private QuestUI questUI;
+        private Dictionary<string, Quest> questDataDict = new Dictionary<string, Quest>();
 
-
-        /*
-        foreach (var data in questDatas)
-        {
-            var quest = data.CreateRuntimeQuest();
-            quest.StartQuest();
-            questUI.Setup(quest); // ⚠️ c’est ici qu’on connecte la quête à l’UI
+        void Awake(){
+            questUI = ServiceLocator.GetService<QuestUI>();
         }
-        */
+
+        void Start()
+        {
+            // Load all ScriptableObjects of type QuestDataSO from Resources folder
+            var questDatas = Resources.LoadAll<QuestDataSO>("");
+            MyUnityPackage.Toolkit.Logger.LogMessage(questDatas.Length + " QuestDataSO loaded");
+
+            // Fill the dictionary
+            foreach (var data in questDatas)
+            {
+                if (!questDataDict.ContainsKey(data.id))
+                {
+                    questDataDict.Add(data.id, data.CreateRuntimeQuest());
+                }
+            }
+            ActivateQuest("CoinQuest");
+        }
+
+        public Quest GetQuestDataByName(string questName)
+        {
+            questDataDict.TryGetValue(questName, out var quest);
+            return quest;
+        }
+
+        public void ActivateQuest(string questId)
+        {
+            var quest = GetQuestDataByName(questId);
+            if (quest != null)
+            {
+                quest.Active(true); 
+                questUI.Setup(quest); 
+            }
+            else
+            {
+                Debug.LogWarning($"Quest with id {questId} not found.");
+            }
+        }
+
     }
 }

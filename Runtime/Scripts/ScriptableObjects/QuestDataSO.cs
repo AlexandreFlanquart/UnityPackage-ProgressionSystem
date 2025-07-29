@@ -1,14 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MyUnityPackage.Quests
+namespace MyUnityPackage.ProgressionSystem
 {
     [CreateAssetMenu(fileName = "QuestDataSO", menuName = "ScriptableObjects/Quest/QuestDataSO")]
     public class QuestDataSO : ScriptableObject
     {
+        public string id;    
         public string title;
         [TextArea] public string description;
-        public ObjectiveDataSO[] objectives;
+        public List<ObjectiveDataSO> objectives;
         
         public Quest CreateRuntimeQuest()
         {
@@ -16,7 +17,7 @@ namespace MyUnityPackage.Quests
             foreach (var data in objectives)
                 runtimeObjectives.Add(data.CreateRuntimeObjective());
 
-            return new Quest(title, description, runtimeObjectives);
+            return new Quest(id, title, description, runtimeObjectives);
         }
     }
 }

@@ -1,10 +1,7 @@
-using MyUnityPackage.Quests;
 using UnityEngine;
 
-namespace MyUnityPackage.Quests
+namespace MyUnityPackage.ProgressionSystem
 {
-    [CreateAssetMenu(fileName = "ObjectiveDataSO", menuName = "ScriptableObjects/Quest/ObjectiveDataSO")]
-
     public abstract class ObjectiveDataSO : ScriptableObject
     {
         public string title;
