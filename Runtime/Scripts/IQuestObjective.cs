@@ -6,10 +6,9 @@ namespace MyUnityPackage.ProgressionSystem
     {
         string Title { get; }
         string Description { get; }
-        string Count { get; }
         bool IsCompleted { get; }
-        int CurrentProgress { get; }
-        int MaxProgress { get; }
+        int CurrentProgression { get; }
+        int MaxProgression { get; }
          public event Action OnCompleted;
 
         void Start();

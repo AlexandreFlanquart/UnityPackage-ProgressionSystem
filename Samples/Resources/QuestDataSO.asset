@@ -15,5 +15,6 @@ MonoBehaviour:
   id: CoinQuest
   title: coin quest title
   description: coin quest decription
-  objectives:
-  - {fileID: 11400000, guid: 93957a1b6bba1134d802d1231bafce52, type: 2}
+  steps:
+  - {fileID: 11400000, guid: b9d1bf8bdbf61bb4ebc00bdf5c5c26d7, type: 2}
+  - {fileID: 11400000, guid: 8a9a2835d6b123f4d8c83d31a239acd3, type: 2}

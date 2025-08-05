@@ -1,8 +1,8 @@
+using System;
 using MyUnityPackage.ProgressionSystem;
 using MyUnityPackage.Toolkit;
-using System;
 
-public class CoinObjective : IQuestObjective, IProgressionNotifier
+public class KillObjective : IQuestObjective, IProgressionNotifier
 {
     private string title;
     public string Title => title;
@@ -20,25 +20,22 @@ public class CoinObjective : IQuestObjective, IProgressionNotifier
 
     public event Action<int, int> OnProgress;
     public event Action OnCompleted;
-
-    public CoinObjective(string _title, string _description, int _countRequired)
+    public KillObjective(string _title, string _description, int _countRequired)
     {
         title = _title;
         description = _description;
         currentProgress = 0;
         maxProgress = _countRequired;
     }
-
     public void Start()
     {
-        Coin.OnAnyCoinsclaim += OnCoinClaim;
+        Monster.OnAnyKill += OnMonsterKill;
     }
-
-    public void OnCoinClaim()
+        public void OnMonsterKill()
     {
         if(isCompleted) return;
 
-        Logger.LogMessage("CoinObjective : OnCoinClaim");
+        Logger.LogMessage("KillObjective : OnMonsterKill");
         currentProgress++;
         Logger.LogMessage("currentProgress : " + currentProgress);
 
@@ -60,3 +57,4 @@ public class CoinObjective : IQuestObjective, IProgressionNotifier
         return IsCompleted;
     }
 }
+    

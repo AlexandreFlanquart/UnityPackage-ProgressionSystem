@@ -9,15 +9,15 @@ namespace MyUnityPackage.ProgressionSystem
         public string id;    
         public string title;
         [TextArea] public string description;
-        public List<ObjectiveDataSO> objectives;
+        public List<QuestStepDataSO> steps;
         
         public Quest CreateRuntimeQuest()
         {
-            var runtimeObjectives = new List<IQuestObjective>();
-            foreach (var data in objectives)
-                runtimeObjectives.Add(data.CreateRuntimeObjective());
+            var runtimeSteps = new List<QuestStep>();
+            foreach (var data in steps)
+                runtimeSteps.Add(data.CreateRuntimeStep());
 
-            return new Quest(id, title, description, runtimeObjectives);
+            return new Quest(id, title, description, runtimeSteps);
         }
     }
 }

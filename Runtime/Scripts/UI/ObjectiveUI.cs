@@ -1,21 +1,24 @@
 using TMPro;
 using UnityEngine;
 
-public class ObjectiveUI : MonoBehaviour
+namespace MyUnityPackage.ProgressionSystem
 {
-    public TextMeshProUGUI titleText;
-    public TextMeshProUGUI descriptionText;
-    public TextMeshProUGUI countText;
-
-    public void Setup(string _title, string _description, int _count)
+    public class ObjectiveUI : MonoBehaviour
     {
-        titleText.text = _title;
-        descriptionText.text = _description;
-        countText.text = "0 / " + _count;
-    }
+        public TextMeshProUGUI titleText;
+        public TextMeshProUGUI descriptionText;
+        public TextMeshProUGUI countText;
 
-    public void SetCount(int count, int max)
-    {
-         countText.text = count + " / " + max;
+        public void Setup(IQuestObjective objective)
+        {
+            titleText.text = objective.Title;
+            descriptionText.text = objective.Description;
+            countText.text = objective.CurrentProgression + " / " + objective.MaxProgression;
+        }
+
+        public void SetCount(int count, int max)
+        {
+            countText.text = count + " / " + max;
+        }
     }
 }
