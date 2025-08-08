@@ -14,9 +14,10 @@ namespace MyUnityPackage.ProgressionSystem
             titleText.text = objective.Title;
             descriptionText.text = objective.Description;
             countText.text = objective.CurrentProgression + " / " + objective.MaxProgression;
+            objective.OnProgress += UpdateProgression;
         }
 
-        public void SetCount(int count, int max)
+        public void UpdateProgression(int count, int max)
         {
             countText.text = count + " / " + max;
         }

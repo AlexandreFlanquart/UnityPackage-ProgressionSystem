@@ -29,9 +29,15 @@ public class KillObjective : IQuestObjective, IProgressionNotifier
     }
     public void Start()
     {
-        Monster.OnAnyKill += OnMonsterKill;
+        MyUnityPackage.Toolkit.Logger.LogMessage("CoinObjective started ! " );
+        Monster.OnAnyKill += OnProgressChange;
     }
-        public void OnMonsterKill()
+    
+    public void Stop(){
+         Monster.OnAnyKill -= OnProgressChange;
+    }
+
+    public void OnProgressChange()
     {
         if(isCompleted) return;
 

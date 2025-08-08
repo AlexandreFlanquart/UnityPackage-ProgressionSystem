@@ -5,5 +5,6 @@ namespace MyUnityPackage.ProgressionSystem
     public interface IProgressionNotifier
     {
         event Action<int, int> OnProgress;
+        public event Action OnCompleted;
     }
 }

@@ -2,7 +2,7 @@ using MyUnityPackage.ProgressionSystem;
 using MyUnityPackage.Toolkit;
 using System;
 
-public class CoinObjective : IQuestObjective, IProgressionNotifier
+public class CoinObjective : IQuestObjective
 {
     private string title;
     public string Title => title;
@@ -31,23 +31,29 @@ public class CoinObjective : IQuestObjective, IProgressionNotifier
 
     public void Start()
     {
-        Coin.OnAnyCoinsclaim += OnCoinClaim;
+        MyUnityPackage.Toolkit.Logger.LogMessage("CoinObjective started ! " );
+        Coin.OnAnyCoinsclaim += OnProgressChange;
     }
 
-    public void OnCoinClaim()
+    public void Stop()
+    {
+        Coin.OnAnyCoinsclaim -= OnProgressChange;
+    }
+
+    public void OnProgressChange()
     {
         if(isCompleted) return;
 
-        Logger.LogMessage("CoinObjective : OnCoinClaim");
+        Logger.LogMessage("CoinObjective - OnCoinClaim");
         currentProgress++;
-        Logger.LogMessage("currentProgress : " + currentProgress);
+        Logger.LogMessage("CoinObjective - currentProgress : " + currentProgress);
+        OnProgress?.Invoke(currentProgress, MaxProgression);
 
         if (CheckProgress())
         {
             OnCompleted?.Invoke();
-            Logger.LogMessage("OnCompleted : ");
+            Logger.LogMessage("CoinObjective - OnCompleted : ");
         }
-        OnProgress?.Invoke(currentProgress, MaxProgression);
     }
 
     public bool CheckProgress()

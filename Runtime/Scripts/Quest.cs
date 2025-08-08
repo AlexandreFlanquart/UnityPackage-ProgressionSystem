@@ -30,6 +30,9 @@ namespace MyUnityPackage.ProgressionSystem
             description = _description;
             steps = _steps;
             maxProgression = _steps.Count;
+            foreach (QuestStep step in steps){
+                step.OnCompleted += OnProgressChange;
+            }
         }
 
         public void Active(bool _active){
@@ -58,19 +61,19 @@ namespace MyUnityPackage.ProgressionSystem
             return isCompleted = currentProgression >= maxProgression;
         }
 
-        public void OnQuestProgress(){
+        public void OnProgressChange(){
             if(isCompleted) return;
         
             Logger.LogMessage("quest : OnProgress");
             currentProgression++;
             Logger.LogMessage("currentProgress : " + currentProgression);
+            OnProgress?.Invoke(currentProgression, maxProgression);
 
             if (CheckProgress())
             {
                 OnCompleted?.Invoke();
                 Logger.LogMessage("OnCompleted : ");
             }
-            OnProgress?.Invoke(currentProgression, maxProgression);
         }
 
 

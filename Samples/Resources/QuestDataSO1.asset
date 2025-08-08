@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: faacf68ffae54394c863f2426435aa83, type: 3}
-  m_Name: QuestDataSO
+  m_Name: QuestDataSO1
   m_EditorClassIdentifier: 
-  id: CoinQuest
-  title: coin quest title
-  description: coin quest decription
+  id: Quest1
+  title: collect quest title
+  description: collect quest decription
   steps:
   - {fileID: 11400000, guid: b9d1bf8bdbf61bb4ebc00bdf5c5c26d7, type: 2}
   - {fileID: 11400000, guid: 8a9a2835d6b123f4d8c83d31a239acd3, type: 2}

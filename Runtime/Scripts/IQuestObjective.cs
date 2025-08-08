@@ -9,9 +9,14 @@ namespace MyUnityPackage.ProgressionSystem
         bool IsCompleted { get; }
         int CurrentProgression { get; }
         int MaxProgression { get; }
-         public event Action OnCompleted;
+        event Action<int, int> OnProgress;
+        public event Action OnCompleted;
 
         void Start();
+        void Stop();
+        bool CheckProgress();
+        bool IsComplete();
+        void OnProgressChange();
     }
 }
 

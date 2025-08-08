@@ -1,39 +1,51 @@
 ﻿using MyUnityPackage.Toolkit;
 using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
+using Logger = MyUnityPackage.Toolkit.Logger;
 
 namespace MyUnityPackage.ProgressionSystem
 {
     public class QuestManager : MonoBehaviour
     {
-        private QuestUI questUI;
+        [SerializeField] private Transform questsContainer;
+        
         private Dictionary<string, Quest> questDataDict = new Dictionary<string, Quest>();
-
-        void Awake(){
-            questUI = ServiceLocator.GetService<QuestUI>();
-        }
+        private Transform questTemplate;
 
         void Start()
         {
+            questTemplate = questsContainer.transform.GetChild(0);
+
             // Load all ScriptableObjects of type QuestDataSO from Resources folder
             var questDatas = Resources.LoadAll<QuestDataSO>("");
             MyUnityPackage.Toolkit.Logger.LogMessage(questDatas.Length + " QuestDataSO loaded");
 
             // Fill the dictionary
+            Quest questTemp = null;
             foreach (var data in questDatas)
             {
                 if (!questDataDict.ContainsKey(data.id))
                 {
-                    questDataDict.Add(data.id, data.CreateRuntimeQuest());
+                    questTemp =  data.CreateRuntimeQuest();
+                    questDataDict.Add(data.id, questTemp);
+                    MyUnityPackage.Toolkit.Logger.LogMessage(data.id + " loaded");
+
+                    // Instatiate the questUI
+                    Transform questTransform = Instantiate(questTemplate, questsContainer);
+                    questTransform.gameObject.SetActive(true);
+                    questTransform.gameObject.GetComponent<QuestUI>().Setup(questTemp);
                 }
             }
-            ActivateQuest("CoinQuest");
+            ActivateQuest("Quest1");
         }
 
         public Quest GetQuestDataByName(string questName)
         {
-            questDataDict.TryGetValue(questName, out var quest);
+            if(!questDataDict.TryGetValue(questName, out var quest))
+            {
+                Logger.LogMessageError("quest : " + questName + " not found");
+                return null;
+            }
             return quest;
         }
 
@@ -43,7 +55,6 @@ namespace MyUnityPackage.ProgressionSystem
             if (quest != null)
             {
                 quest.Active(true); 
-                questUI.Setup(quest); 
             }
             else
             {

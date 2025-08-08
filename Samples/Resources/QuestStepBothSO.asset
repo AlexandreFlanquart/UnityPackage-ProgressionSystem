@@ -10,6 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6a01625ca2566cd44b238afdee3d539c, type: 3}
-  m_Name: QuestStepDataSO2
+  m_Name: QuestStepBothSO
   m_EditorClassIdentifier: 
-  objectives: []
+  objectives:
+  - {fileID: 11400000, guid: 617d08cefb490514c8f73f88de546071, type: 2}
+  - {fileID: 11400000, guid: 93957a1b6bba1134d802d1231bafce52, type: 2}

@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace MyUnityPackage.ProgressionSystem.UI{
+namespace MyUnityPackage.ProgressionSystem{
     /// <summary>
     /// ExtendedQuestUI is a UI component that displays more information about a quest when mouse is over the quest. 
     /// It is used to display the quest title, description and current progression.
@@ -26,7 +26,11 @@ namespace MyUnityPackage.ProgressionSystem.UI{
                 titleHead.text = quest.title;
                 descriptionHead.text = quest.description;
                 stepCount.text = quest.currentProgression.ToString() + "/" + quest.maxProgression.ToString();
-
+                
+                for(int i = objectiveContainer.childCount - 1; i > 0; i--) {
+                    DestroyImmediate(objectiveContainer.GetChild(i).gameObject);
+                }
+                
                 foreach (var objective in quest.steps[quest.currentProgression].objectives){
                     var objectiveGO = Instantiate(objectiveTemplate, objectiveContainer);
                     objectiveGO.SetActive(true);
