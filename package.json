@@ -1,8 +1,8 @@
 {
-  "name": "com.myunitypackage.quets",
+  "name": "com.myunitypackage.progressionSystem",
   "version": "1.0.0",
-  "displayName": "UnityPackage - Quets ",
-  "description": "UnityPackage - Quets ",
+  "displayName": "UnityPackage - ProgressionSystem ",
+  "description": "UnityPackage - ProgressionSystem ",
   "unity": "6000.0",
   "dependencies": {},
   "author": {
