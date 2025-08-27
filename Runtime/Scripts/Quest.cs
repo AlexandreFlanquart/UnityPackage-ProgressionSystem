@@ -38,10 +38,12 @@ namespace MyUnityPackage.ProgressionSystem
         public void Active(bool _active){
             MyUnityPackage.Toolkit.Logger.LogMessage("active : " + _active + " on " + id);
             isActive = _active;
-            if(isActive){
-                foreach(var step in steps){
-                    step.Start();
-                }
+            if(isActive)
+            {
+                steps[currentProgression].Start();
+                //foreach(var step in steps){
+                    //step.Start();
+                //}
             }
         }
 
@@ -74,6 +76,8 @@ namespace MyUnityPackage.ProgressionSystem
                 OnCompleted?.Invoke();
                 Logger.LogMessage("OnCompleted : ");
             }
+            else
+                steps[currentProgression].Start();
         }
 
 
