@@ -11,13 +11,13 @@ namespace MyUnityPackage.ProgressionSystem
         
         private Dictionary<string, Quest> questDataDict = new Dictionary<string, Quest>();
         private Transform questTemplate;
-
-        void Start()
+        
+        void Awake()
         {
             questTemplate = questsContainer.transform.GetChild(0);
 
             // Load all ScriptableObjects of type QuestDataSO from Resources folder
-            var questDatas = Resources.LoadAll<QuestDataSO>("");
+            var questDatas = Resources.LoadAll<QuestDataSO>("Quest/QuestSO");
             MyUnityPackage.Toolkit.Logger.LogMessage(questDatas.Length + " QuestDataSO loaded");
 
             // Fill the dictionary
@@ -36,7 +36,7 @@ namespace MyUnityPackage.ProgressionSystem
                     questTransform.gameObject.GetComponent<QuestUI>().Setup(questTemp);
                 }
             }
-            ActivateQuest("Quest1");
+           // ActivateQuest("Quest1");
         }
 
         public Quest GetQuestDataByName(string questName)
