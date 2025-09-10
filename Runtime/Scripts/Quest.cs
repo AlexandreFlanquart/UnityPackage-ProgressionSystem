@@ -36,7 +36,7 @@ namespace MyUnityPackage.ProgressionSystem
         }
 
         public void Active(bool _active){
-            MyUnityPackage.Toolkit.Logger.LogMessage("active : " + _active + " on " + id);
+            MUPLogger.LogMessage("active : " + _active + " on " + id);
             isActive = _active;
             if(isActive)
             {
@@ -66,15 +66,15 @@ namespace MyUnityPackage.ProgressionSystem
         public void OnProgressChange(){
             if(isCompleted) return;
         
-            Logger.LogMessage("quest : OnProgress");
+            MUPLogger.LogMessage("quest : OnProgress");
             currentProgression++;
-            Logger.LogMessage("currentProgress : " + currentProgression);
+            MUPLogger.LogMessage("currentProgress : " + currentProgression);
             OnProgress?.Invoke(currentProgression, maxProgression);
 
             if (CheckProgress())
             {
                 OnCompleted?.Invoke();
-                Logger.LogMessage("OnCompleted : ");
+                MUPLogger.LogMessage("OnCompleted : ");
             }
             else
                 steps[currentProgression].Start();

@@ -12,7 +12,7 @@ namespace MyUnityPackage.ProgressionSystem
         
             public void Setup(Quest quest)
             {
-                MyUnityPackage.Toolkit.Logger.LogMessage("Setup NotifierQuestUI - " + " id : " + quest.id + " title : " + quest.title);
+                MUPLogger.LogMessage("Setup NotifierQuestUI - " + " id : " + quest.id + " title : " + quest.title);
                 titleText.text = quest.title;
                 descriptionText.text = quest.description;              
             }

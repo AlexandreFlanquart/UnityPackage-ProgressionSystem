@@ -26,14 +26,14 @@ namespace MyUnityPackage.ProgressionSystem
 
         public void Start()
         {
-            Logger.LogMessage("QuestStep : Start");
+            MUPLogger.LogMessage("QuestStep : Start");
             foreach (var objective in objectives)
                 objective.Start();
         }
 
         public void Stop()
         {
-            Logger.LogMessage("QuestStep : Stop");
+            MUPLogger.LogMessage("QuestStep : Stop");
             foreach (var objective in objectives)
                 objective.Start();
         }
@@ -41,15 +41,15 @@ namespace MyUnityPackage.ProgressionSystem
         public void OnProgressChange(){
             if(isCompleted) return;
 
-            Logger.LogMessage("QuestStep - OnProgressChange");
+            MUPLogger.LogMessage("QuestStep - OnProgressChange");
             currentProgression++;
-            Logger.LogMessage("QuestStep - currentProgress : " + currentProgression);
+            MUPLogger.LogMessage("QuestStep - currentProgress : " + currentProgression);
             OnProgress?.Invoke(currentProgression, maxProgression);
 
             if (CheckProgression())
             {
                 OnCompleted?.Invoke();
-                Logger.LogMessage("QuestStep - OnCompleted");
+                MUPLogger.LogMessage("QuestStep - OnCompleted");
             }
         }
 

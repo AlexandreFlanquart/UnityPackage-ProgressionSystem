@@ -1,7 +1,7 @@
 ﻿using MyUnityPackage.Toolkit;
 using UnityEngine;
 using System.Collections.Generic;
-using Logger = MyUnityPackage.Toolkit.Logger;
+
 
 namespace MyUnityPackage.ProgressionSystem
 {
@@ -18,7 +18,7 @@ namespace MyUnityPackage.ProgressionSystem
 
             // Load all ScriptableObjects of type QuestDataSO from Resources folder
             var questDatas = Resources.LoadAll<QuestDataSO>("Quest/QuestSO");
-            MyUnityPackage.Toolkit.Logger.LogMessage(questDatas.Length + " QuestDataSO loaded");
+            MUPLogger.LogMessage(questDatas.Length + " QuestDataSO loaded");
 
             // Fill the dictionary
             Quest questTemp = null;
@@ -28,7 +28,7 @@ namespace MyUnityPackage.ProgressionSystem
                 {
                     questTemp =  data.CreateRuntimeQuest();
                     questDataDict.Add(data.id, questTemp);
-                    MyUnityPackage.Toolkit.Logger.LogMessage(data.id + " loaded");
+                    MUPLogger.LogMessage(data.id + " loaded");
 
                     // Instatiate the questUI
                     Transform questTransform = Instantiate(questTemplate, questsContainer);
@@ -43,7 +43,7 @@ namespace MyUnityPackage.ProgressionSystem
         {
             if(!questDataDict.TryGetValue(questName, out var quest))
             {
-                Logger.LogMessageError("quest : " + questName + " not found");
+                MUPLogger.LogMessageError("quest : " + questName + " not found");
                 return null;
             }
             return quest;

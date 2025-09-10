@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using MyUnityPackage.Toolkit;
 
 namespace MyUnityPackage.ProgressionSystem
 {
@@ -27,7 +28,7 @@ namespace MyUnityPackage.ProgressionSystem
         public void Setup(Quest _quest)
         {
             quest = _quest;
-            MyUnityPackage.Toolkit.Logger.LogMessage("Setup QuestUI - " + " id : " +  quest.id + " title : " + quest.title);
+            MUPLogger.LogMessage("Setup QuestUI - " + " id : " +  quest.id + " title : " + quest.title);
             titleText.text = quest.title;
             descriptionText.text = quest.description;
             progressionText.text = quest.currentProgression + " / " + quest.maxProgression;  
@@ -37,7 +38,7 @@ namespace MyUnityPackage.ProgressionSystem
 
         public void UpdateQuestUI(int current, int max)
         {      
-            MyUnityPackage.Toolkit.Logger.LogMessage("UpdateQuestUI - " + " current : " + current + " max : " + max);
+            MUPLogger.LogMessage("UpdateQuestUI - " + " current : " + current + " max : " + max);
             progressionText.text = current + " / " + max;
         }
 
@@ -49,7 +50,7 @@ namespace MyUnityPackage.ProgressionSystem
             {
                 extentedUI.Setup(quest);
                 extentedUIGO.SetActive(true);
-                MyUnityPackage.Toolkit.Logger.LogMessage("Mouse hover QuestUI");
+                MUPLogger.LogMessage("Mouse hover QuestUI");
             }
         }
 
@@ -60,7 +61,7 @@ namespace MyUnityPackage.ProgressionSystem
             if (extentedUI != null)
             {
                 extentedUIGO.SetActive(false);
-                MyUnityPackage.Toolkit.Logger.LogMessage("Mouse leave QuestUI");
+                MUPLogger.LogMessage("Mouse leave QuestUI");
             }
         }
     }

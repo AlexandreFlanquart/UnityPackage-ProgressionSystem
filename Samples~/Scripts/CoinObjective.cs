@@ -31,7 +31,7 @@ public class CoinObjective : IQuestObjective
 
     public void Start()
     {
-        MyUnityPackage.Toolkit.Logger.LogMessage("CoinObjective started ! " );
+        MUPLogger.LogMessage("CoinObjective started ! " );
         Coin.OnAnyCoinsclaim += OnProgressChange;
     }
 
@@ -44,15 +44,15 @@ public class CoinObjective : IQuestObjective
     {
         if(isCompleted) return;
 
-        Logger.LogMessage("CoinObjective - OnCoinClaim");
+        MUPLogger.LogMessage("CoinObjective - OnCoinClaim");
         currentProgress++;
-        Logger.LogMessage("CoinObjective - currentProgress : " + currentProgress);
+        MUPLogger.LogMessage("CoinObjective - currentProgress : " + currentProgress);
         OnProgress?.Invoke(currentProgress, MaxProgression);
 
         if (CheckProgress())
         {
             OnCompleted?.Invoke();
-            Logger.LogMessage("CoinObjective - OnCompleted : ");
+            MUPLogger.LogMessage("CoinObjective - OnCompleted : ");
         }
     }
 

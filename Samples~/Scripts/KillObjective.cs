@@ -29,7 +29,7 @@ public class KillObjective : IQuestObjective, IProgressionNotifier
     }
     public void Start()
     {
-        MyUnityPackage.Toolkit.Logger.LogMessage("KillObjective started ! " );
+        MUPLogger.LogMessage("KillObjective started ! " );
         Monster.OnAnyKill += OnProgressChange;
     }
     
@@ -41,14 +41,14 @@ public class KillObjective : IQuestObjective, IProgressionNotifier
     {
         if(isCompleted) return;
 
-        Logger.LogMessage("KillObjective : OnMonsterKill");
+        MUPLogger.LogMessage("KillObjective : OnMonsterKill");
         currentProgress++;
-        Logger.LogMessage("currentProgress : " + currentProgress);
+        MUPLogger.LogMessage("currentProgress : " + currentProgress);
 
         if (CheckProgress())
         {
             OnCompleted?.Invoke();
-            Logger.LogMessage("OnCompleted : ");
+            MUPLogger.LogMessage("OnCompleted : ");
         }
         OnProgress?.Invoke(currentProgress, MaxProgression);
     }
