@@ -1,5 +1,13 @@
 # MYUNITYPACKAGE-QUESTS 
-Package for Unity.
+
+## About
+MyUnityPackage-Quests is a package that includes a collection of class to manage your quest !
+
+## What's New
+To see the last update of the package check [here](CHANGELOG.md) !
+
+## How to use
+
 
 <br>
 
