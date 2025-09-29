@@ -4,19 +4,16 @@ namespace MyUnityPackage.ProgressionSystem
 {
     public interface IQuestObjective
     {
-        string Title { get; }
-        string Description { get; }
-        bool IsCompleted { get; }
-        int CurrentProgression { get; }
-        int MaxProgression { get; }
-        event Action<int, int> OnProgress;
+        public string Title { get; }
+        public string Description { get; }
+        public bool IsCompleted { get; }
+        public int CurrentProgression { get; }
+        public int MaxProgression { get; }
+        public event Action<int, int> OnProgress;
         public event Action OnCompleted;
 
         void Start();
         void Stop();
-        bool CheckProgress();
-        bool IsComplete();
-        void OnProgressChange();
     }
 }
 

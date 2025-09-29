@@ -4,15 +4,15 @@ using MyUnityPackage.Toolkit;
 
 namespace MyUnityPackage.ProgressionSystem
 {
-    public class QuestStep : IProgressionNotifier
+    public class QuestStep
     {
-        public List<IQuestObjective> objectives;
+        public int currentProgression {get; private set;}
+        public int maxProgression {get; private set;} 
+        public bool isCompleted => currentProgression >= maxProgression;
+
+        public List<IQuestObjective> objectives { get; private set; }
         public event Action<int, int> OnProgress;
         public event Action OnCompleted;
-
-        private int currentProgression;
-        private int maxProgression;   
-        private bool isCompleted;
 
         public QuestStep(List<IQuestObjective> _objectives)
         {
@@ -26,36 +26,31 @@ namespace MyUnityPackage.ProgressionSystem
 
         public void Start()
         {
-            MUPLogger.LogMessage("QuestStep : Start");
+            MUPLogger.Info("QuestStep : Start");
             foreach (var objective in objectives)
                 objective.Start();
         }
 
         public void Stop()
         {
-            MUPLogger.LogMessage("QuestStep : Stop");
+            MUPLogger.Info("QuestStep : Stop");
             foreach (var objective in objectives)
-                objective.Start();
+                objective.Stop();
         }
 
-        public void OnProgressChange(){
+        private void OnProgressChange(){
             if(isCompleted) return;
 
-            MUPLogger.LogMessage("QuestStep - OnProgressChange");
+            MUPLogger.Info("QuestStep - OnProgressChange");
             currentProgression++;
-            MUPLogger.LogMessage("QuestStep - currentProgress : " + currentProgression);
+            MUPLogger.Info("QuestStep - currentProgress : " + currentProgression);
             OnProgress?.Invoke(currentProgression, maxProgression);
 
-            if (CheckProgression())
+            if (isCompleted)
             {
                 OnCompleted?.Invoke();
-                MUPLogger.LogMessage("QuestStep - OnCompleted");
+                MUPLogger.Info("QuestStep - OnCompleted");
             }
-        }
-
-        public bool CheckProgression()
-        {
-            return isCompleted = currentProgression >= maxProgression;
         }
     }
 }

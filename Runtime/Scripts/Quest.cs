@@ -11,17 +11,20 @@ namespace MyUnityPackage.ProgressionSystem
     /// </summary>
     public class Quest
     {
-        public string id {get; private set;}
-        public string title {get; private set;}
-        public string description {get; private set;}
-        public int currentProgression {get; private set;}
-        public int maxProgression {get; private set;}
-        public List<QuestStep> steps;
-        public bool isCompleted {get; private set;} = false; 
-        public bool isActive {get; private set;} = false;
+        public readonly string id;
+        public readonly string title;
+        public readonly string description;
+        public int currentProgression { get; private set; }
+        public int maxProgression { get; private set; }
+        public List<QuestStep> steps { get; private set; }
+        public bool isCompleted => currentProgression >= maxProgression;
+        public bool isActive { get; private set; } = false;
+        public bool isTracked { get; private set; } = false;
 
-        public event Action<int, int> OnProgress;
+        public event Action OnProgressionChanged;
+        public event Action OnStarted;
         public event Action OnCompleted;
+
 
         public Quest(string _id, string _title, string _description, List<QuestStep> _steps)
         {
@@ -30,56 +33,46 @@ namespace MyUnityPackage.ProgressionSystem
             description = _description;
             steps = _steps;
             maxProgression = _steps.Count;
-            foreach (QuestStep step in steps){
+            foreach (QuestStep step in steps)
+            {
                 step.OnCompleted += OnProgressChange;
             }
         }
 
-        public void Active(bool _active){
-            MUPLogger.LogMessage("active : " + _active + " on " + id);
+        public void Active(bool _active)
+        {
+            MUPLogger.Info("active : " + _active + " on " + id);
             isActive = _active;
-            if(isActive)
+            if (isActive)
             {
                 steps[currentProgression].Start();
-                //foreach(var step in steps){
-                    //step.Start();
-                //}
             }
+            OnStarted?.Invoke();
         }
 
-        public bool IsActive(){
-            return isActive;
-        }
-
-        public void Completed(bool _completed){
-            isCompleted = _completed;
-        }
-        public bool IsCompleted(){
-            return isCompleted;
-        }
-
-        public bool CheckProgress()
+        private void OnProgressChange()
         {
-            return isCompleted = currentProgression >= maxProgression;
-        }
+            if (isCompleted) return;
 
-        public void OnProgressChange(){
-            if(isCompleted) return;
-        
-            MUPLogger.LogMessage("quest : OnProgress");
+            MUPLogger.Info("quest : OnProgress");
             currentProgression++;
-            MUPLogger.LogMessage("currentProgress : " + currentProgression);
-            OnProgress?.Invoke(currentProgression, maxProgression);
+            MUPLogger.Info("currentProgress : " + currentProgression);
+            OnProgressionChanged?.Invoke();
 
-            if (CheckProgress())
+            if (isCompleted)
             {
                 OnCompleted?.Invoke();
-                MUPLogger.LogMessage("OnCompleted : ");
+                MUPLogger.Info("Quest : " + id + " Completed !");
             }
             else
                 steps[currentProgression].Start();
         }
 
+        public void Track(bool _track)
+        {
+            isTracked = _track;
+            MUPLogger.Info("track : " + _track + " on " + id);
+        }
 
     }
 }

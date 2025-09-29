@@ -10,59 +10,75 @@ namespace MyUnityPackage.ProgressionSystem
     /// It is used to display the quest title, description and current progression.
     /// It is also used to update the current progression when the quest is completed.
     /// </summary>
-    public class QuestUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+    public class QuestUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
     {
         [SerializeField] private TextMeshProUGUI titleText;
         [SerializeField] private TextMeshProUGUI descriptionText;
         [SerializeField] private TextMeshProUGUI progressionText;
-        [SerializeField] private GameObject extentedUIGO;
+        [SerializeField] private GameObject lockImage;
+        [SerializeField] private GameObject trackImage;
 
-        private ExtendedQuestUI extentedUI;
+
         private Quest quest;
         private bool isActive = true;
+        private bool isTracked = false;
 
-        public void Start(){
-            extentedUI = extentedUIGO.GetComponent<ExtendedQuestUI>();
+        private QuestManager questManager;
+
+        void Start()
+        {
+            questManager = ServiceLocator.GetService<QuestManager>();
         }
 
         public void Setup(Quest _quest)
         {
             quest = _quest;
-            MUPLogger.LogMessage("Setup QuestUI - " + " id : " +  quest.id + " title : " + quest.title);
+            MUPLogger.Info("Setup QuestUI - " + " id : " + quest.id + " title : " + quest.title);
             titleText.text = quest.title;
             descriptionText.text = quest.description;
-            progressionText.text = quest.currentProgression + " / " + quest.maxProgression;  
-            quest.OnProgress += UpdateQuestUI;
-            quest.OnCompleted += delegate {isActive = false;};
+            progressionText.text = quest.currentProgression + " / " + quest.maxProgression;
+            quest.OnStarted += delegate { SetActive(true); };
+            quest.OnProgressionChanged += UpdateQuestUI;
+            quest.OnCompleted += delegate { SetActive(false);  questManager.TrackQuest(quest, false);};
+            SetActive(false);
         }
 
-        public void UpdateQuestUI(int current, int max)
-        {      
-            MUPLogger.LogMessage("UpdateQuestUI - " + " current : " + current + " max : " + max);
-            progressionText.text = current + " / " + max;
+        public void UpdateQuestUI()
+        {
+            MUPLogger.Info("UpdateQuestUI - " + " current : " + quest.currentProgression + " max : " + quest.maxProgression);
+            progressionText.text = quest.currentProgression + " / " + quest.maxProgression;
         }
 
         public void OnPointerEnter(PointerEventData eventData)
-        {   
-            if(!isActive)return;
+        {
+            if (!isActive) return;
 
-            if (extentedUI != null)
-            {
-                extentedUI.Setup(quest);
-                extentedUIGO.SetActive(true);
-                MUPLogger.LogMessage("Mouse hover QuestUI");
-            }
+            MUPLogger.Info("Mouse hover QuestUI");
+            questManager.ShowExtendedQuestUI(quest);   
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            if(!isActive)return;
+            if (!isActive) return;
 
-            if (extentedUI != null)
-            {
-                extentedUIGO.SetActive(false);
-                MUPLogger.LogMessage("Mouse leave QuestUI");
-            }
+            MUPLogger.Info("Mouse leave QuestUI");
+            questManager.HideExtendedQuestUI();
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (!isActive) return;
+
+            isTracked = !isTracked;
+            questManager.TrackQuest(quest, isTracked);
+            trackImage.SetActive(isTracked);
+            MUPLogger.Info("Mouse click QuestUI");
+        }
+
+        public void SetActive(bool active)
+        {
+            isActive = active;
+            lockImage.SetActive(!active);
         }
     }
 }

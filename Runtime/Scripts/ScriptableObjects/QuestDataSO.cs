@@ -6,10 +6,10 @@ namespace MyUnityPackage.ProgressionSystem
     [CreateAssetMenu(fileName = "QuestDataSO", menuName = "ScriptableObjects/Quest/QuestDataSO")]
     public class QuestDataSO : ScriptableObject
     {
-        public string id;    
-        public string title;
-        [TextArea] public string description;
-        public List<QuestStepDataSO> steps;
+        [SerializeField] private string id;    
+        [SerializeField] private string title;
+        [TextArea] [SerializeField] private string description;
+        [SerializeField] private List<QuestStepDataSO> steps;
         
         public Quest CreateRuntimeQuest()
         {

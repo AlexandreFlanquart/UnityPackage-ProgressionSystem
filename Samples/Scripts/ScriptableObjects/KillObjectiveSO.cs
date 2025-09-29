@@ -4,10 +4,10 @@ using MyUnityPackage.ProgressionSystem;
 [CreateAssetMenu(fileName = "KillObjectiveSO", menuName = "ScriptableObjects/Quest/KillObjectiveSO")]
 public class KillObjectiveSO : ObjectiveDataSO
 {
-    public int countRequired;
+    [SerializeField] private int countRequired;
 
     public override IQuestObjective CreateRuntimeObjective()
     {
-        return new KillObjective("kill title", "kill description", countRequired);
+        return new KillObjective(Title, Description, countRequired);
     }
 }

@@ -6,7 +6,7 @@ namespace MyUnityPackage.ProgressionSystem
     [CreateAssetMenu(fileName = "QuestStepDataSO", menuName = "ScriptableObjects/Quest/QuestStepDataSO")]
     public class QuestStepDataSO : ScriptableObject
     {
-        public List<ObjectiveDataSO> objectives;
+        [SerializeField] private List<ObjectiveDataSO> objectives;
         
         public QuestStep CreateRuntimeStep()
         {
