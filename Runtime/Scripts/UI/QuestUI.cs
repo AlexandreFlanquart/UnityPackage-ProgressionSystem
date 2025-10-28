@@ -25,13 +25,9 @@ namespace MyUnityPackage.ProgressionSystem
 
         private QuestManager questManager;
 
-        void Start()
-        {
-            questManager = ServiceLocator.GetService<QuestManager>();
-        }
-
         public void Setup(Quest _quest)
         {
+            questManager = ServiceLocator.GetService<QuestManager>();
             quest = _quest;
             MUPLogger.Info("Setup QuestUI - " + " id : " + quest.id + " title : " + quest.title);
             titleText.text = quest.title;
