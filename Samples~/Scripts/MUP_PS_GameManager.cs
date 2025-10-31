@@ -10,7 +10,7 @@ public class MUP_PS_GameManager : MonoBehaviour
     {
         questManager.Init();
         questManager.ActivateQuest("Quest1");
-        questManager.GetQuestDataByID("Quest1").OnCompleted += delegate { questManager.ActivateQuest("Quest2"); };
+        questManager.GetQuestDataByID("Quest1").OnCompleted += delegate { questManager.ActivateQuest("Quest2"); questManager.ActivateQuest("Quest3");};
     }
 
 }
