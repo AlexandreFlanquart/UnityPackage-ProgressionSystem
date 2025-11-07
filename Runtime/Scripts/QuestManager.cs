@@ -73,8 +73,7 @@ namespace MyUnityPackage.ProgressionSystem
             {
                 Debug.LogWarning($"Quest with id {questID} not found.");
             }
-            notifierQuestUI.Setup(quest);
-            notifierQuestUI.Show();
+            notifierQuestUI.SetupAndShow(quest);
         }
 
         public void TrackQuest(Quest quest, bool track = true)

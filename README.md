@@ -39,4 +39,35 @@ Ce module permet de créer, configurer et gérer des quêtes complexes dans Unit
    - Quand tous les objectifs d'une étape sont terminés, la quête passe à l'étape suivante.
    - Quand toutes les étapes sont terminées, la quête est complétée.
 
+5. **UI**
 
+   5.1. **Notifieur de quêtes**
+   
+   Permet qu'a chaque fois qu'une nouvelle quetes est activé de notifié le joueur via l'UI.
+
+   Utilisation:
+   - Créer un objet qui contiendra le script `NotifierQuestUI` sur lui.
+   - Créer un fils `Content`.
+   - Créer deux fils à `Content` qui seront des `Text` qui seront le titre et la description de la quêtes.
+   - Glissez dans le script `NotifierQuestUI` les élements correspondant.
+
+   5.2. **Traqueur de quêtes**
+
+   Permet de garder une quêtes affichés in-game afin d'aidés le joueur.
+
+   Utilisation:
+   - Créer un objet qui contiendra le script `TrackedQuestUI` sur lui.
+   - Créer trois fils de type `Text` qui contiendront le titre, la description et l'étape actuelle.
+   - Glissez dans le script `TrackedQuestUI` les élements correspondant.
+
+   5.3. **Etendeurs de quêtes**
+
+   Permet d'afficher plus d'informations au survol d'une quêtes.
+   Utilisation:
+   - Créer un objet qui contiendra le script `ExtentedQuestUI` sur lui.
+   - Créer deux fils, un de type `Text` et un de type `Image`.
+   - Créer un autre fils vide qui lui va contenir tout les infos
+      - Head : Va contenir les titre, la description, la progression ainsi qu'une image de fond.
+      - Objectives : Va contenir un template avec la description, le suivi et la description de l'objectif.
+      - Rewards : Va contenir un template avec le logo et le nombre d'élements obtenu par le joueur à la fin de la quêtes. 
+   - Glissez dans le script `ExtentedQuestUI` les élements correspondant.
